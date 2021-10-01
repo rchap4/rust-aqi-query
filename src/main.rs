@@ -174,7 +174,7 @@ async fn main() -> Result<(), Error> {
     let distance: u32 = 20;
 
     let request_url: String = format!(
-        "http://www.airnowapi.org/aq/observation/zipCode/current/?format={format}&zipCode={zipCode}&distance={distance}&API_KEY={apiKey}",
+        "https://www.airnowapi.org/aq/observation/zipCode/current/?format={format}&zipCode={zipCode}&distance={distance}&API_KEY={apiKey}",
         format = format,
         zipCode = zip_code,
         distance = distance,
