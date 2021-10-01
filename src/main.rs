@@ -141,6 +141,7 @@ async fn get_aqi(request_url: &str, with_prom: bool) -> Result<(), Error> {
                 match item.ParameterName.as_str() {
                     "O3" => log_o3_metric(item.AQI).unwrap(),
                     "PM10" => log_pm10_metric(item.AQI).unwrap(),
+                    "PM2.5" => log_pm25_metric(item.AQI).unwrap(),
                     _ => (),
                 }
             }
