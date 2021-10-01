@@ -181,23 +181,23 @@ async fn main() -> Result<(), Error> {
     );
 
     let arc_url = std::sync::Arc::new(request_url);
+    let is_prom_enabled =
+        matches!(ARGS.prom_enabled, Some(None) | Some(Some(true)));
 
-    if let Some(p) = ARGS.prom_enabled {
-        let url = std::sync::Arc::clone(&arc_url);
+    if is_prom_enabled {
         tokio::spawn(async move {
             let mut collect_interval =
                 tokio::time::interval(std::time::Duration::from_secs(3600));
             loop {
                 collect_interval.tick().await;
-                get_aqi(&url, p.unwrap_or(false))
+                get_aqi(&arc_url, true)
                     .await
                     .unwrap_or_else(|e| println!("Request error {}", e))
             }
         });
         prom_support::enable_prom().await;
     } else {
-        let url = std::sync::Arc::clone(&arc_url);
-        get_aqi(&url, false).await?
+        get_aqi(&arc_url, false).await?
     }
 
     Ok(())
