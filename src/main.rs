@@ -141,6 +141,7 @@ async fn get_aqi(request_url: &str, with_prom: bool) -> Result<(), Error> {
                 match item.ParameterName.as_str() {
                     "O3" => log_o3_metric(item.AQI).unwrap(),
                     "PM10" => log_pm10_metric(item.AQI).unwrap(),
+                    "PM2.5" => log_pm25_metric(item.AQI).unwrap(),
                     _ => (),
                 }
             }
@@ -173,7 +174,7 @@ async fn main() -> Result<(), Error> {
     let distance: u32 = 20;
 
     let request_url: String = format!(
-        "http://www.airnowapi.org/aq/observation/zipCode/current/?format={format}&zipCode={zipCode}&distance={distance}&API_KEY={apiKey}",
+        "https://www.airnowapi.org/aq/observation/zipCode/current/?format={format}&zipCode={zipCode}&distance={distance}&API_KEY={apiKey}",
         format = format,
         zipCode = zip_code,
         distance = distance,
@@ -181,23 +182,23 @@ async fn main() -> Result<(), Error> {
     );
 
     let arc_url = std::sync::Arc::new(request_url);
+    let is_prom_enabled =
+        matches!(ARGS.prom_enabled, Some(None) | Some(Some(true)));
 
-    if let Some(p) = ARGS.prom_enabled {
-        let url = std::sync::Arc::clone(&arc_url);
+    if is_prom_enabled {
         tokio::spawn(async move {
             let mut collect_interval =
                 tokio::time::interval(std::time::Duration::from_secs(3600));
             loop {
                 collect_interval.tick().await;
-                get_aqi(&url, p.unwrap_or(false))
+                get_aqi(&arc_url, true)
                     .await
                     .unwrap_or_else(|e| println!("Request error {}", e))
             }
         });
         prom_support::enable_prom().await;
     } else {
-        let url = std::sync::Arc::clone(&arc_url);
-        get_aqi(&url, false).await?
+        get_aqi(&arc_url, false).await?
     }
 
     Ok(())
