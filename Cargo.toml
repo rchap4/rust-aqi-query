@@ -1,0 +1,19 @@
+[package]
+name = "rust-aqi-query"
+version = "0.2.0"
+authors = ["RChapman"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3.23"
+serde = { version = "1.0.130", features = ["derive"] }
+reqwest = { version = "0.11.4", features = ["json"] }
+tokio = { version = "1.11.0", features = ["macros", "rt-multi-thread", "time"] }
+warp = "0.3.1"
+prometheus = { version = "0.12.0", features = ["process"] }
+lazy_static = "1.4.0"
+futures = { version = "0.3.17", default-features = false }
+chrono = "0.4.19"
+protobuf = "2.25.1"
