@@ -1,16 +1,19 @@
-# For the moment build release binary first.
-# Cargo install takes to long to build container on my
-# host - others welcome to build in container
 FROM rust:latest as builder
+WORKDIR /usr/src
+RUN cargo new rust-aqi-query
 WORKDIR /usr/src/rust-aqi-query
-COPY ./target/release/rust-aqi-query . 
-# COPY . .
-#RUN cargo install --path .
+
+# cache dependencies
+COPY Cargo.toml .
+RUN cargo install --path .
+
+COPY . .
+RUN touch -a -m ./src/main.rs # forces cargo to rebuild
+RUN cargo install --path .
 
 FROM debian:buster-slim
 EXPOSE 3030
 RUN apt-get update && apt-get install -y libssl1.1 ca-certificates
 RUN rm -r -f /var/lib/apt/lists/*
-COPY --from=builder /usr/src/rust-aqi-query/rust-aqi-query /usr/local/bin/rust-aqi-query
-#COPY --from=builder /usr/local/cargo/bin/rust-aqi-query /usr/local/bin/rust-aqi-query
+COPY --from=builder /usr/local/cargo/bin/rust-aqi-query /usr/local/bin/rust-aqi-query
 CMD ["rust-aqi-query", "--prometheus-enabled", "true"]
