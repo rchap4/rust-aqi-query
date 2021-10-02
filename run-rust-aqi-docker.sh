@@ -2,7 +2,6 @@
 # Configure .env file with your API Key and Zipcode
 docker run \
     --env-file .env \
-    --network="host" \
+    -p 3030:3030 \
     --rm \
-    rust-aqi-query:v1 
-
+    rust-aqi-query:v1
