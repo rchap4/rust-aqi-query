@@ -9,7 +9,7 @@ COPY ./target/release/rust-aqi-query .
 
 FROM debian:buster-slim
 EXPOSE 3030
-RUN apt-get update && apt-get install -y libssl1.1
+RUN apt-get update && apt-get install -y libssl1.1 ca-certificates
 RUN rm -r -f /var/lib/apt/lists/*
 COPY --from=builder /usr/src/rust-aqi-query/rust-aqi-query /usr/local/bin/rust-aqi-query
 #COPY --from=builder /usr/local/cargo/bin/rust-aqi-query /usr/local/bin/rust-aqi-query
