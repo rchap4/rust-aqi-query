@@ -44,3 +44,6 @@ OPTIONS:
 * Include zipcode in metrics
 * Improve error handling
 * Add trace support
+* Parameters for bind IP and port
+* Documentation for running on Docker
+
