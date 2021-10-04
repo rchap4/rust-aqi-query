@@ -39,6 +39,7 @@ OPTIONS:
 ```
 
 ## TO DOs
+* Setup Github Action (on Linux) for Clippy, Build and Format
 * Refactor functions to modules
 * Metrics are provided to prometheus in a basic way, think harder on the ideal data model
 * Include zipcode in metrics
