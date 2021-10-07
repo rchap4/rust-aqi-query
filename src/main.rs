@@ -20,6 +20,8 @@ use lazy_static::lazy_static;
 use reqwest::Error;
 use serde::Deserialize;
 use structopt::StructOpt;
+use std::str::FromStr;
+
 
 mod prom_support;
 
@@ -61,7 +63,29 @@ struct RustAqiQueryCli {
 
     #[structopt(long = "prometheus-enabled")]
     prom_enabled: Option<Option<bool>>,
+
+    #[structopt(flatten)]
+    options: PrometheusOptions
 }
+
+
+#[derive(StructOpt, Debug)]
+struct PrometheusOptions {
+    #[structopt(long = "port", required_if("prometheus-enabled", "true"))]
+    port: Option<u16>,
+
+    #[structopt(long = "ip")]
+    bind_ip: Option<std::net::IpAddr>,
+}
+
+// impl FromStr for PrometheusOptions {
+
+//     fn from_str(s: &str) -> Result<Self, Self::Err> {
+//         type Err = std::num::ParseIntError;
+//         Ok(())
+//     }
+// }
+
 
 #[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
@@ -196,10 +220,21 @@ async fn main() -> Result<(), Error> {
                     .unwrap_or_else(|e| println!("Request error {}", e))
             }
         });
-        prom_support::enable_prom().await;
+        prom_support::enable_prom(ARGS.options.bind_ip, ARGS.options.port).await;
     } else {
         get_aqi(&arc_url, false).await?
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn some_test(){
+        assert_eq!(5,5);
+    }
+
 }
