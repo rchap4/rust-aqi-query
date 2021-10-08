@@ -19,7 +19,6 @@ use warp::Filter;
 use std::net::IpAddr;
 use std::net::Ipv4Addr;
 use std::net::SocketAddr;
-use std::str::FromStr;
 
 lazy_static! {
     pub static ref O3_AQI: IntGauge =
@@ -102,6 +101,10 @@ async fn metric_handler() -> Result<impl warp::Reply, warp::Rejection> {
     Ok(res)
 }
 
+fn default_bind_ip() -> IpAddr {
+    IpAddr::V4(Ipv4Addr::new(0,0,0,0))
+}
+
 // Change to ...enable_prom() -> Result<...>
 pub async fn enable_prom(ip: Option<std::net::IpAddr>, port: Option<u16>) {
     register_metrics().unwrap();
@@ -111,8 +114,7 @@ pub async fn enable_prom(ip: Option<std::net::IpAddr>, port: Option<u16>) {
     let routes = metrics_route;
     
     //let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0,0,0,0)),port.unwrap_or(3030));
-    let socket = SocketAddr::new(ip.unwrap_or(IpAddr::V4(Ipv4Addr::new(0,0,0,0))), port.unwrap_or(3030));
-    //let bind_addr = ip.unwrap_or(IpAddr::V4(Ipv4Addr::new(0,0,0,0)));
+    let socket = SocketAddr::new(ip.unwrap_or_else(|| { default_bind_ip() }), port.unwrap_or(3030));
 
     warp::serve(routes).run(socket).await;
 }

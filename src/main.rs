@@ -20,8 +20,6 @@ use lazy_static::lazy_static;
 use reqwest::Error;
 use serde::Deserialize;
 use structopt::StructOpt;
-use std::str::FromStr;
-
 
 mod prom_support;
 
@@ -74,17 +72,9 @@ struct PrometheusOptions {
     #[structopt(long = "port", required_if("prometheus-enabled", "true"))]
     port: Option<u16>,
 
-    #[structopt(long = "ip")]
+    #[structopt(long = "ip", required_if("prometheus-enabled", "true"))]
     bind_ip: Option<std::net::IpAddr>,
 }
-
-// impl FromStr for PrometheusOptions {
-
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         type Err = std::num::ParseIntError;
-//         Ok(())
-//     }
-// }
 
 
 #[allow(non_snake_case)]
@@ -230,8 +220,7 @@ async fn main() -> Result<(), Error> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
+    // Sample test for testing GitHub Action only
     #[test]
     fn some_test(){
         assert_eq!(5,5);
