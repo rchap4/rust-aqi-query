@@ -16,6 +16,10 @@
 use lazy_static::lazy_static;
 use prometheus::{Encoder, IntGauge, Registry};
 use warp::Filter;
+use std::net::IpAddr;
+use std::net::Ipv4Addr;
+use std::net::SocketAddr;
+use std::str::FromStr;
 
 lazy_static! {
     pub static ref O3_AQI: IntGauge =
@@ -99,12 +103,16 @@ async fn metric_handler() -> Result<impl warp::Reply, warp::Rejection> {
 }
 
 // Change to ...enable_prom() -> Result<...>
-pub async fn enable_prom() {
+pub async fn enable_prom(ip: Option<std::net::IpAddr>, port: Option<u16>) {
     register_metrics().unwrap();
 
     let metrics_route = warp::path("metrics").and_then(metric_handler);
 
     let routes = metrics_route;
+    
+    //let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0,0,0,0)),port.unwrap_or(3030));
+    let socket = SocketAddr::new(ip.unwrap_or(IpAddr::V4(Ipv4Addr::new(0,0,0,0))), port.unwrap_or(3030));
+    //let bind_addr = ip.unwrap_or(IpAddr::V4(Ipv4Addr::new(0,0,0,0)));
 
-    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
+    warp::serve(routes).run(socket).await;
 }
