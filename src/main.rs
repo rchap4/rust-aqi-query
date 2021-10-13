@@ -113,7 +113,7 @@ fn get_metric_datetime(
 fn log_o3_metric(aqi: u32) -> Result<(), AqiError> {
     //prom_support::O3_AQI.metric().set_timestamp_ms(get_metric_timestamp(item.HourObserved));
 
-    prom_support::O3_AQI.set(aqi.into());
+    prom_support::O3_AQI.with_label_values(&[&ARGS.zip_code]).set(aqi.into());
     Ok(())
 }
 

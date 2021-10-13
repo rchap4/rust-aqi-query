@@ -4,4 +4,5 @@ docker run \
     --env-file .env \
     -p 3030:3030 \
     --rm \
-    rust-aqi-query:v1
+    -d \
+    rust-aqi-query:latest

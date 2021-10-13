@@ -14,15 +14,15 @@
 */
 
 use lazy_static::lazy_static;
-use prometheus::{Encoder, IntGauge, Registry};
+use prometheus::{Encoder, IntGauge, Registry, Opts, IntGaugeVec};
 use warp::Filter;
 use std::net::IpAddr;
 use std::net::Ipv4Addr;
 use std::net::SocketAddr;
 
 lazy_static! {
-    pub static ref O3_AQI: IntGauge =
-        IntGauge::new("airnow_o3_aqi_values", "Airnow O3 AQI")
+    pub static ref O3_AQI: IntGaugeVec =
+        IntGaugeVec::new(Opts::new("airnow_o3_aqi_values", "Airnow O3 AQI"), &["zip_code"])
         .expect("Could not create O3 Metric");
 
     pub static ref PM10_AQI: IntGauge =
