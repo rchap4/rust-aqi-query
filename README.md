@@ -72,7 +72,7 @@ Run container with Docker using default bridge network.
 ```
 
 ## TO DOs
-* DONE - Setup Github Action (on Linux) for Clippy, Format, and Build
+* DONE - Setup Github Action (on Linux) for Clippy, Format
 * Refactor functions to modules
 * Metrics are provided to prometheus in a basic way, think harder on the ideal data model
 * DONE - Include zipcode in metrics

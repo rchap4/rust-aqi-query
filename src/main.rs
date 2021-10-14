@@ -59,7 +59,7 @@ struct RustAqiQueryCli {
     #[structopt(long = "zipcode", env)]
     zip_code: String,
 
-    #[structopt(long = "prometheus-enabled")]
+    #[structopt(long = "prometheus-enabled", env)]
     prom_enabled: Option<Option<bool>>,
 
     #[structopt(flatten)]
