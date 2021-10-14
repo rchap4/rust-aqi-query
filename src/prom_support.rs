@@ -14,7 +14,7 @@
 */
 
 use lazy_static::lazy_static;
-use prometheus::{Encoder, IntGauge, Registry, Opts, IntGaugeVec};
+use prometheus::{Encoder, Registry, Opts, IntGaugeVec};
 use warp::Filter;
 use std::net::IpAddr;
 use std::net::Ipv4Addr;
@@ -25,12 +25,12 @@ lazy_static! {
         IntGaugeVec::new(Opts::new("airnow_o3_aqi_values", "Airnow O3 AQI"), &["zip_code"])
         .expect("Could not create O3 Metric");
 
-    pub static ref PM10_AQI: IntGauge =
-        IntGauge::new("airnow_pm10_aqi_values", "Airnow PM10 AQI values")
+    pub static ref PM10_AQI: IntGaugeVec =
+        IntGaugeVec::new(Opts::new("airnow_pm10_aqi_values", "Airnow PM10 AQI values"), &["zip_code"])
         .expect("Could not create PM10 metric");
 
-    pub static ref PM25_AQI: IntGauge =
-        IntGauge::new("airnow_pm25_aqi_values", "Airnow PM25 AQI values")
+    pub static ref PM25_AQI: IntGaugeVec =
+        IntGaugeVec::new(Opts::new("airnow_pm25_aqi_values", "Airnow PM25 AQI values"), &["zip_code"])
         .expect("Could not create PM2.5 metric");
 
     // pub static ref AQI_GUAGE: IntGaugeVec =
@@ -113,8 +113,7 @@ pub async fn enable_prom(ip: Option<std::net::IpAddr>, port: Option<u16>) {
 
     let routes = metrics_route;
     
-    //let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0,0,0,0)),port.unwrap_or(3030));
-    let socket = SocketAddr::new(ip.unwrap_or_else(|| { default_bind_ip() }), port.unwrap_or(3030));
+    let socket = SocketAddr::new(ip.unwrap_or_else(default_bind_ip), port.unwrap_or(3030));
 
     warp::serve(routes).run(socket).await;
 }

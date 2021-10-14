@@ -72,13 +72,13 @@ Run container with Docker using default bridge network.
 ```
 
 ## TO DOs
-* Setup Github Action (on Linux) for Clippy, Format, and Build
+* DONE - Setup Github Action (on Linux) for Clippy, Format, and Build
 * Refactor functions to modules
 * Metrics are provided to prometheus in a basic way, think harder on the ideal data model
-* Include zipcode in metrics
+* DONE - Include zipcode in metrics
 * Improve error handling
 * Add trace support
-* Parameters for bind IP and port
-* Documentation for running on Docker
-* Mask API key enviroment variable and enable Prometheus related options as environment variables
+* DONE - Parameters for bind IP and port
+* Documentation for running on Docker - Needs testing.
+* DONE - Mask API key enviroment variable and enable Prometheus related options as environment variables
 

@@ -53,7 +53,7 @@ impl std::error::Error for AqiError {
 
 #[derive(StructOpt, Debug)]
 struct RustAqiQueryCli {
-    #[structopt(long = "apikey", env)]
+    #[structopt(long = "apikey", env, hide_env_values = true)]
     air_now_api_key: String,
 
     #[structopt(long = "zipcode", env)]
@@ -69,10 +69,10 @@ struct RustAqiQueryCli {
 
 #[derive(StructOpt, Debug)]
 struct PrometheusOptions {
-    #[structopt(long = "port", required_if("prometheus-enabled", "true"))]
+    #[structopt(long = "port", required_if("prometheus-enabled", "true"), env)]
     port: Option<u16>,
 
-    #[structopt(long = "ip", required_if("prometheus-enabled", "true"))]
+    #[structopt(long = "ip", required_if("prometheus-enabled", "true"), env)]
     bind_ip: Option<std::net::IpAddr>,
 }
 
@@ -118,12 +118,12 @@ fn log_o3_metric(aqi: u32) -> Result<(), AqiError> {
 }
 
 fn log_pm10_metric(aqi: u32) -> Result<(), AqiError> {
-    prom_support::PM10_AQI.set(aqi.into());
+    prom_support::PM10_AQI.with_label_values(&[&ARGS.zip_code]).set(aqi.into());
     Ok(())
 }
 
 fn log_pm25_metric(aqi: u32) -> Result<(), AqiError> {
-    prom_support::PM25_AQI.set(aqi.into());
+    prom_support::PM25_AQI.with_label_values(&[&ARGS.zip_code]).set(aqi.into());
     Ok(())
 }
 
