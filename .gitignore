@@ -6,3 +6,6 @@ Cargo.lock
 /prom
 .env
 run-rust-aqi-docker.sh
+.aqi-env
+
+
