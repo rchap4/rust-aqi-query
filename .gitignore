@@ -1,7 +1,6 @@
 /target
 api.txt
 main.rs.backup
-Cargo.lock
 /.vscode/launch.json
 /prom
 .env
