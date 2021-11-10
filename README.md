@@ -61,7 +61,7 @@ AIR_NOW_API_KEY=YOUR-AIR-NOW-API-KEY
 Run container with Docker using default bridge network.  
 
 ```
-    # Assuming image built above tagged as rust-aqi-query:lastest
+    # Assuming image built above tagged as rust-aqi-query:latest
 
     docker run \
     --env-file .env \
