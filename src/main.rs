@@ -147,8 +147,8 @@ async fn get_aqi(request_url: &str, with_prom: bool) -> Result<(), Error> {
         println!("Empty response");
     } else {
         println!(
-            "{:>10}{:>10}{:>12}{:>10}",
-            "Date", "Hour", "Parameter", "AQI"
+            "{:>10}{:>10}{:>10}{:>20}{:>12}{:>10}",
+            "Date", "Hour", "State", "Reporting Area", "Parameter", "AQI"
         );
         for item in &aqi_data {
             if with_prom {
@@ -164,9 +164,11 @@ async fn get_aqi(request_url: &str, with_prom: bool) -> Result<(), Error> {
             //               &item.ParameterName,
             //               item.AQI).unwrap();
             println!(
-                "{date:>10}{hour:>width$}{parameter_name:>12}{aqi:>width$}",
+                "{date:>10}{hour:>width$}{statecode:>10}{reporting_area:>20}{parameter_name:>12}{aqi:>width$}",
                 date = item.DateObserved,
                 hour = item.HourObserved,
+                statecode = item.StateCode,
+                reporting_area = item.ReportingArea,
                 parameter_name = item.ParameterName,
                 aqi = item.AQI,
                 width = 10

@@ -20,7 +20,7 @@ cargo build --release
 
 ## Usage Info
 
-Zip Code and API key can be provided as a command line options or set as environment variables.  The Rust StructOpt crate facilities this behavior.  See source code or CLI help for details.
+Zip Code and API key can be provided as a command line options or set as environment variables.  The Rust StructOpt crate facilitates this behavior.  See source code or CLI help for details.
 
 With *--prometheus-enabled true* exposes a endpoint at /metrics for Prometheus to scrape.
 
@@ -74,11 +74,11 @@ Run container with Docker using default bridge network.
 ## TO DOs
 * DONE - Setup Github Action (on Linux) for Clippy, Format
 * Refactor functions to modules
-* Metrics are provided to prometheus in a basic way, think harder on the ideal data model
+* Metrics are provided to Prometheus in a basic way, think harder on the ideal data model
 * DONE - Include zipcode in metrics
 * Improve error handling
 * Add trace support
 * DONE - Parameters for bind IP and port
 * Documentation for running on Docker - Needs testing.
-* DONE - Mask API key enviroment variable and enable Prometheus related options as environment variables
+* DONE - Mask API key environment variable and enable Prometheus related options as environment variables
 
