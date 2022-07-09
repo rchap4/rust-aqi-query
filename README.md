@@ -3,7 +3,7 @@
 ## Overview
 Between traffic smog and wildfire smoke it's useful to know the current air quality.  If your a runner or a cyclist planning your day, you might monitor the air quality along with the weather.  This tool queries the AirNow API and provides the current air quality index without leaving your shell.  
 
-Optionally, this cool can poll the AirNow API hourly and expose the data to Prometheus at /metrics.
+Optionally, this tool can poll the AirNow API hourly and expose the data to Prometheus at /metrics.
 
 Uses the AirNow API to pull air quality data for a US zip code, where the data is available.  You'll need to obtain a free API key to use this tool.    
 
