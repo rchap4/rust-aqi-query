@@ -1,7 +1,7 @@
 # Rust AQI Query
 
 ## Overview
-Between traffic smog and wildfire smoke it's useful to know the current air quality.  If your a runner or a cyclist planning your day, you might monitor the air quality along with the weather.  This tool queries the AirNow API and provides the current air quality index without leaving your shell.  
+Between traffic smog and wildfire smoke it's useful to know the current air quality.  If you're a runner or a cyclist planning your day, you might monitor the air quality along with the weather.  This tool queries the AirNow API and provides the current air quality index without leaving your shell.  
 
 Optionally, this tool can poll the AirNow API hourly and expose the data to Prometheus at /metrics.
 
