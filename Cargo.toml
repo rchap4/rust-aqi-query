@@ -1,6 +1,6 @@
 [package]
 name = "rust-aqi-query"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["RChapman"]
 edition = "2018"
 
@@ -8,12 +8,16 @@ edition = "2018"
 
 [dependencies]
 structopt = "0.3.23"
-serde = { version = "1.0.130", features = ["derive"] }
-reqwest = { version = "0.11.4", features = ["json"] }
-tokio = { version = "1.28.0", features = ["macros", "rt-multi-thread", "time"] }
-warp = "0.3.3"
-prometheus = { version = "0.12.0", features = ["process"] }
+serde = { version = "1.0.178", features = ["derive"] }
+reqwest = { version = "0.11.24", features = ["json"] }
+tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread"] }
+warp = "0.3.6"
+prometheus = { version = "0.13.3", features = ["process"] }
 lazy_static = "1.4.0"
-futures = { version = "0.3.17", default-features = false }
-chrono = "0.4.24"
-protobuf = "2.25.1"
+futures = { version = "0.3.28", default-features = false }
+chrono = "0.4.26"
+protobuf = "3.2.0"
+
+[dev-dependencies]
+h2 = "0.3.24"
+openssl = "0.10.60"
