@@ -10,7 +10,7 @@ edition = "2018"
 structopt = "0.3.23"
 serde = { version = "1.0.178", features = ["derive"] }
 reqwest = { version = "0.11.24", features = ["json"] }
-tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.39.3", features = ["macros", "rt-multi-thread"] }
 warp = "0.3.6"
 prometheus = { version = "0.13.3", features = ["process"] }
 lazy_static = "1.4.0"
@@ -19,5 +19,5 @@ chrono = "0.4.26"
 protobuf = "3.2.0"
 
 [dev-dependencies]
-h2 = "0.3.24"
-openssl = "0.10.60"
+h2 = "0.3.26"
+openssl = "0.10.66"
